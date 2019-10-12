@@ -23,6 +23,7 @@ public class BookListMainActivity extends AppCompatActivity {
 
     ListView listViewBooks;
     private List<Book> listBooks=new ArrayList<>();
+    BookAdapter bookAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +33,8 @@ public class BookListMainActivity extends AppCompatActivity {
         init();
         listViewBooks=this.findViewById(R.id.list_view_books);
 
-        BookAdapter adapter = new BookAdapter(BookListMainActivity.this, R.layout.list_item_book,listBooks);
-        listViewBooks.setAdapter(adapter);
+        bookAdapter = new BookAdapter(BookListMainActivity.this, R.layout.list_item_book,listBooks);
+        listViewBooks.setAdapter(bookAdapter);
 
         this.registerForContextMenu(listViewBooks);
     }
@@ -56,6 +57,9 @@ public class BookListMainActivity extends AppCompatActivity {
             case 1 :
                 break;
             case 2:
+                AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+                listBooks.remove(info.position);
+                bookAdapter.notifyDataSetChanged();
                 Toast.makeText(BookListMainActivity.this,"删除成功", Toast.LENGTH_LONG).show();
                 break;
             case 3:
