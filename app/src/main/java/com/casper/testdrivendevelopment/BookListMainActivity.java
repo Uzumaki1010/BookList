@@ -4,13 +4,17 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,35 @@ public class BookListMainActivity extends AppCompatActivity {
 
         BookAdapter adapter = new BookAdapter(BookListMainActivity.this, R.layout.list_item_book,listBooks);
         listViewBooks.setAdapter(adapter);
+
+        this.registerForContextMenu(listViewBooks);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+        menu.setHeaderTitle(listBooks.get(info.position).getTitle());
+
+        menu.add(0, 1, 0, "新建");
+        menu.add(0, 2, 0, "删除");
+        menu.add(0, 3, 0, "关于...");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case 1 :
+                break;
+            case 2:
+                Toast.makeText(BookListMainActivity.this,"删除成功", Toast.LENGTH_LONG).show();
+                break;
+            case 3:
+                Toast.makeText(BookListMainActivity.this,"图书列表v2.0", Toast.LENGTH_LONG).show();
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 
     private void init() {
