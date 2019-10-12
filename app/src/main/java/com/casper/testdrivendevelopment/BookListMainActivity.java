@@ -54,7 +54,9 @@ public class BookListMainActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 1 :
+            case 1:
+                listBooks.add(new Book("Book",R.drawable.book_no_name));
+                bookAdapter.notifyDataSetChanged();
                 break;
             case 2:
                 AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
