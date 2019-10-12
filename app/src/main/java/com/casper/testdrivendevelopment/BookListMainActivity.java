@@ -28,14 +28,14 @@ public class BookListMainActivity extends AppCompatActivity {
         init();
         listViewBooks=this.findViewById(R.id.list_view_books);
 
-        BookAdapter adapter = new BookAdapter(BookListMainActivity.this, android.R.layout.,listBooks);
+        BookAdapter adapter = new BookAdapter(BookListMainActivity.this, R.layout.list_item_book,listBooks);
         listViewBooks.setAdapter(adapter);
     }
 
     private void init() {
         listBooks.add(new Book("软件项目管理案例教程（第4版）",R.drawable.book_2));
         listBooks.add(new Book("创新工程实践",R.drawable.book_no_name));
-        listBooks.add(new Book("信息安全数学基础（第2版）",R.drawable.book_2));
+        listBooks.add(new Book("信息安全数学基础（第2版）",R.drawable.book_1));
     }
 
     class BookAdapter extends ArrayAdapter<Book> {
