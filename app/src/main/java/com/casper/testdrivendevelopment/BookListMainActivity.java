@@ -1,7 +1,10 @@
 package com.casper.testdrivendevelopment;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -55,14 +58,27 @@ public class BookListMainActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 1:
-                listBooks.add(new Book("Book",R.drawable.book_no_name));
+                final int InsertPosition=((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+                listBooks.add(InsertPosition,new Book("Book",R.drawable.book_no_name));
                 bookAdapter.notifyDataSetChanged();
                 break;
             case 2:
                 AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-                listBooks.remove(info.position);
-                bookAdapter.notifyDataSetChanged();
-                Toast.makeText(BookListMainActivity.this,"删除成功", Toast.LENGTH_LONG).show();
+                final int RemovePosition=info.position;
+                Dialog dialog = new AlertDialog.Builder(BookListMainActivity.this).setTitle("删除信息？").setMessage("您确定要删除这条信息吗？").setIcon(R.drawable.book_no_name).setPositiveButton("删除", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        listBooks.remove(RemovePosition);
+                        bookAdapter.notifyDataSetChanged();
+                        Toast.makeText(BookListMainActivity.this,"删除成功", Toast.LENGTH_LONG).show();
+                    }
+                }).setNeutralButton("查看详情", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).create();
+                dialog.show();
                 break;
             case 3:
                 Toast.makeText(BookListMainActivity.this,"图书列表v2.0", Toast.LENGTH_LONG).show();
